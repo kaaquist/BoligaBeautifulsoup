@@ -1,4 +1,4 @@
-![Boliga - beautifulsoup4 example](https://static.datasciencedojo.com/wp-content/uploads/PythonBeautifulSoup-04.png "beautifulsoup4 test")
+<img src="https://static.datasciencedojo.com/wp-content/uploads/PythonBeautifulSoup-04.png" alt="Boliga - beautifulsoup4 example" align="middle" width="200"/>
 
 Test beautifulsoup4 with Python
 ------------------------
