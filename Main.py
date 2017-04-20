@@ -53,9 +53,9 @@ def boliga_spider(max_pages):
 
 
 def make_row_and_add_oldval(rowcount, columncount, oldval, prisogtype):
-    xlsxsheet.write(rowcount, columncount, oldval.decode('utf-8'))
+    xlsxsheet.write(rowcount, columncount, oldval.encode('utf-8').decode('utf-8'))
     columncount += 1
-    xlsxsheet.write(rowcount, columncount, prisogtype.decode('utf-8'))
+    xlsxsheet.write(rowcount, columncount, prisogtype.encode('utf-8').decode('utf-8'))
     return columncount
 
 def get_opslag(plain_txt, title):
@@ -74,9 +74,11 @@ def get_opslag(plain_txt, title):
         # This is the value that was stored in the last run below.
         oldval = ""
         for i in [x for x in opslag.find_all('h4')]:
-            prisogtype = str(i.getText().strip().encode('utf-8'))
+            prisogtype = str(i.getText().strip())
+            print (prisogtype.split('.')[0])
             if prisogtype.split('.')[0] in mrd:
                 dowrite = True
+                print ("Dowrite enabled")
             if dowrite:
                 if columncount == 0:
                     xlsxsheet.write(rowcount, columncount, title)
@@ -90,19 +92,19 @@ def get_opslag(plain_txt, title):
                 elif "Prisændring" in oldval:
                     newprisogtype = prisogtype.split("\n")
                     for x in newprisogtype:
-                        print x
+                        print (x)
                     xlsxsheet.write(rowcount, columncount + 2, newprisogtype[0].split(' ')[1])
                     xlsxsheet.write(rowcount, columncount + 3, newprisogtype[0].split(' ')[0])
                     xlsxsheet.write(rowcount, columncount + 4, newprisogtype[3].strip().split(' ')[0])
                 else:
-                    xlsxsheet.write(rowcount, columncount, prisogtype.decode('utf-8'))
+                    xlsxsheet.write(rowcount, columncount, prisogtype.encode('utf-8').decode('utf-8'))
                 print (prisogtype)
                 columncount += 1
                 oldval = prisogtype
         for j in [y for y in opslag.find_all('h6')]:
             if dowrite:
                 liggetid = str(j.getText().strip())
-                xlsxsheet.write(rowcount, columncount, liggetid.decode('utf-8'))
+                xlsxsheet.write(rowcount, columncount, liggetid.encode('utf-8').decode('utf-8'))
                 columncount += 1
 
         if dowrite:
