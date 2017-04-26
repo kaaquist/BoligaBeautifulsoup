@@ -3,6 +3,7 @@
 
 import requests
 import xlsxwriter
+import datetime
 from bs4 import BeautifulSoup
 
 
@@ -17,11 +18,21 @@ headers = {
     'User-agent': 'Mozilla/5.0',
 }
 
-xlsxbook = xlsxwriter.Workbook('demo.xlsx')
-xlsxsheet = xlsxbook.add_worksheet()
-
 mrd = "jan feb mar apr maj jun jul aug sep okt nov dec"
 rowcount = 0
+
+
+def get_xlsx_file():
+    global rowcount
+    rowcount = 0
+    xlsxbook = xlsxwriter.Workbook('xlsxbook-{}.xlsx'.format(str(datetime.datetime.now())))
+    xlsxsheet = xlsxbook.add_worksheet()
+    return xlsxsheet, xlsxbook
+
+
+def close_xlsx_file(book_to_close):
+    book_to_close.close()
+
 
 def connector(url):
     '''
@@ -39,26 +50,33 @@ def boliga_spider(max_pages):
     :return: Output print with data regarding sales figures for the property.
     '''
     page = 1
+    xlsxsheet, xlsxbook = get_xlsx_file()
     try:
         while page <= max_pages:
+            # Here we reload a new xlsxbook and xlsxsheet when we have reached x rows in the xlsx. Max is 65000
+            if rowcount > 40000:
+                close_xlsx_file(xlsxbook)
+                xlsxsheet, xlsxbook = get_xlsx_file()
             url = 'http://www.boliga.dk/bolig/' + str(page)
             plain_text = connector(url).content
             title = BeautifulSoup(plain_text, "html5lib").find('title').string
             print("Title: " + title)
-            get_opslag(plain_text, title)
+            get_opslag(plain_text, title, xlsxsheet)
             page += 1
     except Exception as ex:
         print (ex)
         pass
 
+    close_xlsx_file(xlsxbook)
 
-def make_row_and_add_oldval(rowcount, columncount, oldval, prisogtype):
+
+def make_row_and_add_oldval(rowcount, columncount, oldval, prisogtype, xlsxsheet):
     xlsxsheet.write(rowcount, columncount, oldval.encode('utf-8').decode('utf-8'))
     columncount += 1
     xlsxsheet.write(rowcount, columncount, prisogtype.encode('utf-8').decode('utf-8'))
     return columncount
 
-def get_opslag(plain_txt, title):
+def get_opslag(plain_txt, title, xlsxsheet):
     '''
 
     :param plain_txt:
@@ -84,11 +102,11 @@ def get_opslag(plain_txt, title):
                     xlsxsheet.write(rowcount, columncount, title)
                     columncount += 1
                 if "Solgt: Alm." in prisogtype:
-                    columncount = make_row_and_add_oldval(rowcount, columncount, oldval, prisogtype)
+                    columncount = make_row_and_add_oldval(rowcount, columncount, oldval, prisogtype, xlsxsheet)
                 elif "Solgt: Ukendt" in prisogtype:
-                    columncount = make_row_and_add_oldval(rowcount, columncount, oldval, prisogtype)
+                    columncount = make_row_and_add_oldval(rowcount, columncount, oldval, prisogtype, xlsxsheet)
                 elif "Prisændring" in prisogtype:
-                    columncount = make_row_and_add_oldval(rowcount, columncount, oldval, prisogtype)
+                    columncount = make_row_and_add_oldval(rowcount, columncount, oldval, prisogtype, xlsxsheet)
                 elif "Prisændring" in oldval:
                     newprisogtype = prisogtype.split("\n")
                     for x in newprisogtype:
@@ -113,4 +131,3 @@ def get_opslag(plain_txt, title):
 
 if __name__ == '__main__':
     boliga_spider(2)
-    xlsxbook.close()

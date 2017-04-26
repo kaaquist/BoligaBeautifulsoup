@@ -37,3 +37,6 @@ var/
 *.egg
 bin/
 include/
+
+#Program specfic. 
+*.xlsx
