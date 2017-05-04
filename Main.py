@@ -25,7 +25,7 @@ rowcount = 0
 def get_xlsx_file():
     global rowcount
     rowcount = 0
-    xlsxbook = xlsxwriter.Workbook('xlsxbook-{}.xlsx'.format(str(datetime.datetime.now())))
+    xlsxbook = xlsxwriter.Workbook('xlsxbook-{}.xlsx'.format(str(datetime.datetime.now()).replace(':', '.')))
     xlsxsheet = xlsxbook.add_worksheet()
     return xlsxsheet, xlsxbook
 
@@ -54,7 +54,7 @@ def boliga_spider(max_pages):
     try:
         while page <= max_pages:
             # Here we reload a new xlsxbook and xlsxsheet when we have reached x rows in the xlsx. Max is 65000
-            if rowcount > 40000:
+            if rowcount > 40:
                 close_xlsx_file(xlsxbook)
                 xlsxsheet, xlsxbook = get_xlsx_file()
             url = 'http://www.boliga.dk/bolig/' + str(page)
@@ -130,4 +130,4 @@ def get_opslag(plain_txt, title, xlsxsheet):
 
 
 if __name__ == '__main__':
-    boliga_spider(2)
+    boliga_spider(12)
