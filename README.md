@@ -15,7 +15,7 @@ Install pip for python.
 	- `git clone https://github.com/kaaquist/BoligaBeautifulsoup.git`
 
 3. Create an virtual environment in the cloned directory.
-	- `virtualenv BoligaBeautifulsoup`
+	- `virtualenv BoligaBeautifulsoup/venv`
 	- `cd BoligaBeautifulsoup`
 
 4. Start the virtual environment. 
@@ -26,4 +26,4 @@ Install pip for python.
 	- `pip install -r requirements.txt`
 
 6. You should now be up and running.
-	- `python Main.py`
+	- `python main.py`

@@ -40,3 +40,6 @@ include/
 
 #Program specfic. 
 *.xlsx
+
+# Virtualenv 
+venv/
