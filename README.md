@@ -1,4 +1,4 @@
-<img src="https://static.datasciencedojo.com/wp-content/uploads/PythonBeautifulSoup-04.png" alt="Boliga - beautifulsoup4 example" align="middle" width="200"/>
+<img src="https://datascientest.com/de/files/2023/06/beautiful-soup-300x129.png" alt="beautifulsoup" align="middle" width="200"/>
 
 Test beautifulsoup4 with Python
 ------------------------
