@@ -3,7 +3,6 @@ import os
 import pytest
 from unittest.mock import MagicMock, patch, call
 
-import main
 from main import (
     get_xlsx_file,
     close_xlsx_file,
