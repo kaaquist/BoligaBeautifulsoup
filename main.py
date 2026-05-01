@@ -34,9 +34,9 @@ def connector(url: str, headers: dict | None = None, timeout: tuple[float, float
 
 
 def make_row_and_add_oldval(rowcount, columncount, oldval, prisogtype, xlsxsheet):
-    xlsxsheet.write(rowcount, columncount, oldval.encode("utf-8").decode("utf-8"))
+    xlsxsheet.write(rowcount, columncount, oldval)
     columncount += 1
-    xlsxsheet.write(rowcount, columncount, prisogtype.encode("utf-8").decode("utf-8"))
+    xlsxsheet.write(rowcount, columncount, prisogtype)
     return columncount
 
 
@@ -73,14 +73,14 @@ def get_opslag(plain_txt, title, xlsxsheet, rowcount: int = 0) -> int:
                     xlsxsheet.write(rowcount, columncount + 3, newprisogtype[0].split(" ")[0])
                     xlsxsheet.write(rowcount, columncount + 4, newprisogtype[3].strip().split(" ")[0])
                 else:
-                    xlsxsheet.write(rowcount, columncount, prisogtype.encode("utf-8").decode("utf-8"))
+                    xlsxsheet.write(rowcount, columncount, prisogtype)
                 columncount += 1
                 oldval = prisogtype
 
         for j in opslag.find_all("h6"):
             if dowrite:
                 liggetid = str(j.getText().strip())
-                xlsxsheet.write(rowcount, columncount, liggetid.encode("utf-8").decode("utf-8"))
+                xlsxsheet.write(rowcount, columncount, liggetid)
                 columncount += 1
 
         if dowrite:
