@@ -63,14 +63,14 @@ class TestConnector:
         mock_response = MagicMock()
         with patch("main.requests.get", return_value=mock_response) as mock_get:
             result = connector("http://example.com")
-            mock_get.assert_called_once_with("http://example.com", headers=HEADERS)
+            mock_get.assert_called_once_with("http://example.com", headers=HEADERS, timeout=(5.0, 30.0))
             assert result is mock_response
 
     def test_uses_custom_headers(self):
         custom_headers = {"User-agent": "TestBot/1.0"}
         with patch("main.requests.get") as mock_get:
             connector("http://example.com", headers=custom_headers)
-            mock_get.assert_called_once_with("http://example.com", headers=custom_headers)
+            mock_get.assert_called_once_with("http://example.com", headers=custom_headers, timeout=(5.0, 30.0))
 
     def test_default_headers_contain_user_agent(self):
         assert "User-agent" in HEADERS

@@ -27,7 +27,9 @@ def close_xlsx_file(book):
     book.close()
 
 
-def connector(url: str, headers: dict = HEADERS, timeout: tuple[float, float] = (5.0, 30.0)):
+def connector(url: str, headers: dict | None = None, timeout: tuple[float, float] = (5.0, 30.0)):
+    if headers is None:
+        headers = HEADERS
     return requests.get(url, headers=headers, timeout=timeout)
 
 
