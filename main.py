@@ -6,7 +6,7 @@ import xlsxwriter
 import datetime
 from bs4 import BeautifulSoup
 
-MONTHS_DA = "jan feb mar apr maj jun jul aug sep okt nov dec"
+MONTHS_DA = frozenset({"jan", "feb", "mar", "apr", "maj", "jun", "jul", "aug", "sep", "okt", "nov", "dec"})
 
 HEADERS = {
     "User-agent": "Mozilla/5.0",
@@ -49,7 +49,7 @@ def get_opslag(plain_txt, title, xlsxsheet, rowcount: int = 0) -> int:
         oldval = ""
         for i in opslag.find_all("h4"):
             prisogtype = str(i.getText().strip())
-            if prisogtype.split(".")[0] in MONTHS_DA:
+            if prisogtype.split(".")[0].strip().lower() in MONTHS_DA:
                 dowrite = True
             if dowrite:
                 if columncount == 0:
