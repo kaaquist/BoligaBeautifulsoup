@@ -1,0 +1,31 @@
+[project]
+name = "boliga-beautifulsoup"
+version = "0.1.0"
+description = "Boliga property data scraper"
+requires-python = ">=3.11"
+dependencies = [
+    "beautifulsoup4>=4.12.3",
+    "html5lib>=1.1",
+    "requests>=2.32.3",
+    "xlsxwriter>=3.2.0",
+]
+
+[project.scripts]
+boliga = "main:main"
+
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools]
+py-modules = ["main"]
+
+[dependency-groups]
+dev = [
+    "pytest>=8.3.5",
+    "pytest-mock>=3.14.0",
+    "openpyxl>=3.1.5",
+]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
