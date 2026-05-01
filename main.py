@@ -41,8 +41,8 @@ def make_row_and_add_oldval(rowcount, columncount, oldval, prisogtype, xlsxsheet
 def get_opslag(plain_txt, title, xlsxsheet, rowcount: int = 0) -> int:
     soup = BeautifulSoup(plain_txt, "html5lib")
     divs = soup.find_all("div", {"class": "row row-1 rowLine"})
-    dowrite = False
     for opslag in divs:
+        dowrite = False
         columncount = 0
         oldval = ""
         for i in opslag.find_all("h4"):
