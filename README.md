@@ -4,26 +4,24 @@ Test beautifulsoup4 with Python
 ------------------------
 This repo holds a small script that scrape data off Boliga.
 
-This is what is needed to get this runnign. 
+## Prerequisites
 
-Install pip for python. 
+Install [uv](https://docs.astral.sh/uv/getting-started/installation/).
 
-1. Install virtualenv for python
-	- `pip install virtualenv`
+## Getting started
 
-2. Clone this project.
+1. Clone this project.
 	- `git clone https://github.com/kaaquist/BoligaBeautifulsoup.git`
-
-3. Create an virtual environment in the cloned directory.
-	- `virtualenv BoligaBeautifulsoup/venv`
 	- `cd BoligaBeautifulsoup`
 
-4. Start the virtual environment. 
-	- `source bin/activate`
-	- you should see your prompt change to have this in front: **(BoligaBeautifulsoup)**.
+2. Install dependencies.
+	- `uv sync`
 
-5. Install requirements for the project to work.
-	- `pip install -r requirements.txt`
+3. Run the script.
+	- `uv run main.py`
 
-6. You should now be up and running.
-	- `python main.py`
+## Running tests
+
+```
+uv run pytest
+```
